@@ -68,7 +68,7 @@ class _HomeState extends State<Home> {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: <Widget>[
-            const HomePage(),
+            HomePage(),
             const InstitutionsPage(),
             DoacoesPage(),
             const MapPage(),

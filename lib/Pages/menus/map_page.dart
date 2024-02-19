@@ -12,6 +12,7 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   Position? position;
   final Set<Marker> _markers = {};
+  late GoogleMapController _mapController;
 
   final locations = {
     "Centro Espírita Caridade e Resignação":
@@ -68,11 +69,15 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
-        markers: _markers,
-        myLocationEnabled: true,
-        initialCameraPosition: CameraPosition(
-            target: LatLng(
-                position?.latitude ?? -3.0858, position?.longitude ?? -60.0219),
-            zoom: 14.0));
+      markers: _markers,
+      myLocationEnabled: true,
+      initialCameraPosition: CameraPosition(
+          target: LatLng(
+              position?.latitude ?? -3.0858, position?.longitude ?? -60.0219),
+          zoom: 14.0),
+      onMapCreated: (controller) {
+        _mapController = controller;
+      },
+    );
   }
 }

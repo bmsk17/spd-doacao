@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,7 +28,7 @@ class AutenticacaoServico {
       await credential.user?.updateDisplayName(nome);
 
       if (avatar != null) {
-        final fileName = '${const Uuid().v4()}}${avatar!.path.split('.').last}';
+        final fileName = '${const Uuid().v4()}}${avatar.path.split('.').last}';
         final fileRef = _firebaseStorage.ref(fileName);
         //await fileRef.putFile(avatar!);
         final fileURL = await fileRef.getDownloadURL();
@@ -43,7 +45,7 @@ class AutenticacaoServico {
       //await credential.user?.updateDisplayName(avatar);
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(_context).showSnackBar(
-        SnackBar(content: Text(e.toString() ?? 'Ocorreu um erro desconhecido')),
+        SnackBar(content: Text(e.toString())),
       );
     } catch (e) {
       ScaffoldMessenger.of(_context).showSnackBar(
@@ -68,7 +70,7 @@ class AutenticacaoServico {
       );
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(_context).showSnackBar(
-        SnackBar(content: Text(e.toString() ?? 'Ocorreu um erro desconhecido')),
+        SnackBar(content: Text(e.toString())),
       );
     } catch (e) {
       ScaffoldMessenger.of(_context).showSnackBar(

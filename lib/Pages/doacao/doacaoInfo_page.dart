@@ -19,6 +19,7 @@ class InfoDoacao extends StatelessWidget {
         'status': "EM ANDAMENTO",
       });
       print('Status da doação atualizado com sucesso!');
+      Navigator.pop(context);
     } catch (e) {
       print('Erro ao atualizar o status da doação: $e');
     }
@@ -77,7 +78,7 @@ class InfoDoacao extends StatelessWidget {
               SizedBox(height: 24.0),
               ElevatedButton(
                 onPressed: () => _adquirirDoacao(context),
-                child: Text('Adquirir'),
+                child: Text('Interessado em Adquirir'),
               ),
             ],
           ),

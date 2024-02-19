@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_maps/Models/doacao_model.dart';
 import 'package:flutter_maps/Pages/cadastro/cadastro_doacao_page.dart';
 import 'package:flutter_maps/Pages/doacao/doacaoInfo_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_maps/Pages/doacao/minhasDoacoes_page.dart';
+import 'package:flutter_maps/servicos/autenticacao_servico.dart';
 
 class DoacoesPage extends StatefulWidget {
   @override
@@ -11,6 +14,24 @@ class DoacoesPage extends StatefulWidget {
 
 class _DoacoesPageState extends State<DoacoesPage> {
   final db = FirebaseFirestore.instance;
+  final StreamController<QuerySnapshot> _streamController =
+      StreamController<QuerySnapshot>();
+
+  @override
+  void initState() {
+    super.initState();
+    final user = AutenticacaoServico(context).getLoggerUser();
+    String? email = user?.email ?? 'Email não disponível';
+    // Cria um stream do Firebase com a consulta desejada
+    db
+        .collection('doacao')
+        .where('email_doador', isNotEqualTo: email)
+        .where('status', isEqualTo: 'ABERTO')
+        .snapshots()
+        .listen((data) {
+      _streamController.add(data);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +40,7 @@ class _DoacoesPageState extends State<DoacoesPage> {
         title: Text('Doações Disponíveis'),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: db.collection('doacao').snapshots(),
+        stream: _streamController.stream, // Usando o stream do StreamController
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -38,6 +59,7 @@ class _DoacoesPageState extends State<DoacoesPage> {
               status: data['status'],
             );
           }).toList();
+
           return ListView.builder(
             itemCount: doacoes.length,
             itemBuilder: (context, index) {
@@ -60,7 +82,7 @@ class _DoacoesPageState extends State<DoacoesPage> {
                         ),
                       );
                     },
-                    child: Text('Adquirir'),
+                    child: Text('Mais Informações'),
                   ),
                 ),
               );
@@ -70,14 +92,52 @@ class _DoacoesPageState extends State<DoacoesPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => CadastroDoacao()),
+          // Mostra um menu de opções ao pressionar o botão de adicionar
+          showMenu(
+            context: context,
+            position: RelativeRect.fromLTRB(
+                1000.0, 1000.0, 0.0, 0.0), // Posição do menu
+            items: [
+              PopupMenuItem(
+                child: ListTile(
+                  leading: Icon(Icons.add),
+                  title: Text('Cadastro de Doações'),
+                  onTap: () {
+                    Navigator.pop(context); // Fecha o menu
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CadastroDoacao()),
+                    );
+                  },
+                ),
+              ),
+              PopupMenuItem(
+                child: ListTile(
+                  leading: Icon(Icons.list),
+                  title: Text('Minhas Doações'),
+                  onTap: () {
+                    Navigator.pop(context); // Fecha o menu
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MinhasDoacoesPage()),
+                    );
+                  },
+                ),
+              ),
+            ],
           );
         },
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _streamController
+        .close(); // Fechar o StreamController quando não for mais necessário
+    super.dispose();
   }
 }
 

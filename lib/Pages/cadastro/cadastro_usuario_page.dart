@@ -8,8 +8,6 @@ import 'package:flutter_maps/Pages/menus/home.dart';
 import 'package:flutter_maps/servicos/autenticacao_servico.dart';
 
 class CadastroPage extends StatefulWidget {
-  const CadastroPage({super.key});
-
   @override
   _CadastroPageState createState() => _CadastroPageState();
 }

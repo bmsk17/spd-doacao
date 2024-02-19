@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1024608459621",
+    "project_id": "projeto-spd",
+    "storage_bucket": "projeto-spd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1024608459621:android:a6fecc3b0b557166fbdf8c",
+        "android_client_info": {
+          "package_name": "com.example.flutter_maps"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrebo-qd6C7AP9wrNZtorDMde0q3hOpnM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,49 @@
+name: flutter_maps
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  camera: ^0.10.5+7
+  camera_camera: ^3.0.0
+  cloud_firestore: ^4.15.4
+  file_picker: ^6.1.1
+  firebase_auth: ^4.17.4
+  firebase_core: ^2.25.4
+  firebase_storage: ^11.6.5
+  flutter:
+    sdk: flutter
+  flutter_animate: ^4.3.0
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.8
+  geolocator: ^10.1.0
+  google_maps_flutter: ^2.5.0
+  http: ^1.1.2
+  uuid: ^4.3.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+
+flutter:
+  uses-material-design: true
+
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/icon/mairo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/icon/mairo.png"
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: "assets/icon/mairo.png"
+  ios: false
+  android_12:
+    image: "assets/icon/mairo.png"

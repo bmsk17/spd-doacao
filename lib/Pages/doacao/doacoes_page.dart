@@ -29,11 +29,13 @@ class _DoacoesPageState extends State<DoacoesPage> {
           final doacoes = snapshot.data!.docs.map((doc) {
             final data = doc.data() as Map<String, dynamic>;
             return DoacaoModel(
-              id_doacao: data['id_doacao'].toString(),
+              idDoacao: data['id_doacao'].toString(),
               descricao: data['descricao'],
               endereco: data['endereco'],
-              imagemUrl: data['imagemUrl'],
-              status: data['status'] ?? false,
+              emailDoador: data['email_doador'],
+              emailReceptor: data['email_receptor'],
+              imageUrl: data['imagemUrl'],
+              status: data['status'],
             );
           }).toList();
           return ListView.builder(
@@ -43,7 +45,7 @@ class _DoacoesPageState extends State<DoacoesPage> {
               return Card(
                 child: ListTile(
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage(doacao.imagemUrl ?? ''),
+                    backgroundImage: NetworkImage(doacao.imageUrl ?? ''),
                   ),
                   title: Text(doacao.descricao ?? ''),
                   trailing: ElevatedButton(

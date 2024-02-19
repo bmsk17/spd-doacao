@@ -16,7 +16,7 @@ class InfoDoacao extends StatelessWidget {
           .collection('doacao')
           .doc(idDocumento)
           .update({
-        'status': true,
+        'status': "EM ANDAMENTO",
       });
       print('Status da doação atualizado com sucesso!');
     } catch (e) {
@@ -41,9 +41,9 @@ class InfoDoacao extends StatelessWidget {
                 width: 200,
                 height: 200,
                 color: Colors.grey,
-                child: doacao.imagemUrl != null
+                child: doacao.imageUrl != null
                     ? Image.network(
-                        doacao.imagemUrl!,
+                        doacao.imageUrl!,
                         width: 200,
                         height: 200,
                         fit: BoxFit.cover,
@@ -71,7 +71,7 @@ class InfoDoacao extends StatelessWidget {
               ),
               SizedBox(height: 12.0),
               Text(
-                'id: ${doacao.id_doacao}',
+                'id: ${doacao.idDoacao}',
                 style: TextStyle(fontSize: 18.0),
               ),
               SizedBox(height: 24.0),

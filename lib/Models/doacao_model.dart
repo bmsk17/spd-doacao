@@ -1,36 +1,52 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class DoacaoModel {
-  String? id_doacao; // Renomeado para usar snake_case
+  String? idDoacao; // Renomeado para usar camelCase
   String? descricao;
   String? endereco;
-  bool? status;
-  String? imagemUrl;
+  String? emailDoador;
+  String? emailReceptor;
+  String? status;
+  String? imageUrl;
+  DateTime dataCriacao = DateTime.now();
+  DateTime dataConclusao = DateTime.now();
 
   // Construtor
   DoacaoModel({
-    this.id_doacao,
+    this.idDoacao,
     this.descricao,
     this.endereco,
+    this.emailDoador,
+    this.emailReceptor,
     this.status,
-    this.imagemUrl,
+    this.imageUrl,
   });
 
   // Método para criar uma instância de DoacaoModel a partir de um mapa JSON
   DoacaoModel.fromJson(Map<String, dynamic> json) {
-    id_doacao = json['id_doacao'] as String?;
+    idDoacao = json['id_doacao'] as String?;
     descricao = json['descricao'] as String?;
     endereco = json['endereco'] as String?;
-    status = json['status'] as bool?;
-    imagemUrl = json['imagemUrl'] as String?;
+    emailDoador = json['email_doador'] as String?;
+    emailReceptor = json['email_receptor'] as String?;
+    status = json['status'] as String?;
+    imageUrl = json['imagemUrl'] as String?;
+    dataCriacao = (json['data_criacao'] as Timestamp).toDate();
+    dataConclusao = (json['data_conclusao'] as Timestamp).toDate();
   }
 
   // Método para converter uma instância de DoacaoModel em um mapa JSON
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id_doacao'] = id_doacao;
-    data['descricao'] = descricao;
-    data['endereco'] = endereco;
-    data['status'] = status;
-    data['imagemUrl'] = imagemUrl;
-    return data;
+    return {
+      'id_doacao': idDoacao,
+      'descricao': descricao,
+      'endereco': endereco,
+      'email_doador': emailDoador,
+      'email_receptor': emailReceptor,
+      'status': status,
+      'imagemUrl': imageUrl,
+      'data_criacao': Timestamp.fromDate(dataCriacao),
+      'data_conclusao': Timestamp.fromDate(dataConclusao),
+    };
   }
 }

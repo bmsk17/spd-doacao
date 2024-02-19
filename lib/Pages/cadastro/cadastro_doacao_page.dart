@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_maps/Models/doacao_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_maps/servicos/autenticacao_servico.dart';
 
 class CadastroDoacao extends StatefulWidget {
   @override
@@ -34,14 +35,18 @@ class _CadastroDoacaoState extends State<CadastroDoacao> {
   Future<void> _salvarDoacao() async {
     int lastId = await _getLastDoacaoId();
     int novoId = lastId + 1;
+    final user = AutenticacaoServico(context).getLoggerUser();
+    String? email = user?.email ?? 'Email não disponível';
 
     var doacao = DoacaoModel(
       // Convertendo o novo ID de volta para uma string
-      id_doacao: novoId.toString(),
+      idDoacao: novoId.toString(),
       descricao: _descricaoController.text,
       endereco: _enderecoController.text,
-      imagemUrl: _imagemController.text,
-      status: false,
+      emailDoador: email,
+      emailReceptor: "",
+      imageUrl: _imagemController.text,
+      status: "ABERTO",
     );
 
     await db.collection("doacao").add(doacao.toJson());

@@ -28,7 +28,7 @@ class AutenticacaoServico {
       if (avatar != null) {
         final fileName = '${const Uuid().v4()}}${avatar!.path.split('.').last}';
         final fileRef = _firebaseStorage.ref(fileName);
-        //await fileRef.putFile(avatar!);
+        await fileRef.putFile(avatar!);
         final fileURL = await fileRef.getDownloadURL();
         //imagem do avatar
         await credential.user?.updatePhotoURL(fileURL);

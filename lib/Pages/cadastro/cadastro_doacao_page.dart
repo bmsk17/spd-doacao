@@ -52,6 +52,20 @@ class _CadastroDoacaoState extends State<CadastroDoacao> {
 
     await db.collection("doacao").add(doacao.toJson());
 
+    var instt = InstituicaoModel(
+      nome: "Centro de Apoio Social João Evangelista",
+      descricao: "Centro de Apoio Social João Evangelista",
+      endereco:
+          "R. Des. Gaspar Guimarães, 94 - Parque 10 de Novembro, Manaus - AM, 69050-661",
+      telefone: "092991492191",
+      longitude: "-60.01787693373347",
+      latitude: "-3.077991636114315",
+      site: "https://www.instagram.com/cas.manaus/?igshid=NGVhN2U2NjQ0Yg%3D%3D",
+      imagem: "",
+    );
+
+    await db.collection("instituicao").add(instt.toJson());
+
     Navigator.pop(context);
   }
 

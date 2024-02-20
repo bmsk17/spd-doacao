@@ -22,6 +22,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final user = AutenticacaoServico(context).getLoggerUser();
+    String? _avatar = user?.avatar ?? 'Email não disponível';
+
     void _signOut() async {
       await AutenticacaoServico(context).signOut();
       Navigator.pushAndRemoveUntil(
@@ -34,7 +37,9 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Row(
           children: [
-            CircleAvatar(),
+            CircleAvatar(
+              backgroundImage: NetworkImage(_avatar ?? ''),
+            ),
             const SizedBox(width: 8),
             Text(widget.user.nome ?? ''),
           ],

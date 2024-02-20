@@ -54,6 +54,22 @@ class _CadastroPageState extends State<CadastroPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            // Botão para buscar foto
+            ElevatedButton(
+              onPressed: _uploadImage,
+              child: Text('Buscar Foto'),
+            ),
+            SizedBox(height: 12.0),
+            // Exibição da foto selecionada
+            _avatar != null
+                ? Image.file(
+                    _avatar!,
+                    height: 150,
+                    width: 150,
+                    fit: BoxFit.cover,
+                  )
+                : Container(),
+            SizedBox(height: 12.0),
             TextField(
               controller: _nameController,
               decoration: InputDecoration(

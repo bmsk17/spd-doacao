@@ -18,18 +18,77 @@ class _InteressesPageState extends State<InteressesPage> {
     _user = _auth.currentUser!;
   }
 
-  Future<void> _concluirInteresse(String idDocumento) async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('doacao')
-          .doc(idDocumento)
-          .update({
-        'status': 'CONCLUÍDO',
-      });
-      print('Interesse concluído com sucesso!');
-    } catch (e) {
-      print('Erro ao concluir o interesse: $e');
-    }
+  Future<void> _concluirInteresse(
+      BuildContext context, String idDoa, String idDocumento) async {
+    // Variável para armazenar o código fornecido pelo usuário
+    TextEditingController codigoController = TextEditingController();
+
+    // Cálculo do código esperado
+    int codigoEsperado = int.tryParse(idDoa) ?? -1 + 1000;
+    codigoEsperado = codigoEsperado + 1000;
+    // Mostrar o diálogo para inserção do código
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Informe o Código Fornecido pelo Doador'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Código Esperado: $codigoEsperado'),
+              SizedBox(height: 12),
+              TextField(
+                controller: codigoController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  hintText: 'Código',
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Fechar o diálogo
+              },
+              child: Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () async {
+                // Verificar se o código fornecido está correto
+                int codigoInformado = int.tryParse(codigoController.text) ?? -1;
+
+                if (codigoInformado == codigoEsperado) {
+                  // Código correto, atualizar o status da doação para CONCLUÍDO
+                  try {
+                    await FirebaseFirestore.instance
+                        .collection('doacao')
+                        .doc(idDocumento)
+                        .update({
+                      'status': 'CONCLUÍDO',
+                    });
+                    print('Interesse concluído com sucesso!');
+                  } catch (e) {
+                    print('Erro ao concluir o interesse: $e');
+                  }
+                } else {
+                  // Código incorreto, exibir mensagem de erro
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Código inválido. Tente novamente.'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                }
+
+                Navigator.of(context).pop(); // Fechar o diálogo
+              },
+              child: Text('Confirmar'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> _excluirInteresse(String idDocumento) async {
@@ -111,7 +170,7 @@ class _InteressesPageState extends State<InteressesPage> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        _concluirInteresse(doc.id);
+                        _concluirInteresse(context, data['id_doacao'], doc.id);
                       },
                       child: Text('Concluir'),
                     ),

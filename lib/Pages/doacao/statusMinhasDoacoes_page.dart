@@ -10,7 +10,6 @@ class StatusMinhasDoacoesPage extends StatelessWidget {
   StatusMinhasDoacoesPage({required this.doacao, required this.idDocumento});
 
   Future<void> _concluirDoacao(BuildContext context) async {
-    print("------------------>>>>>   : ${idDocumento}");
     try {
       await FirebaseFirestore.instance
           .collection('doacao')
@@ -19,7 +18,26 @@ class StatusMinhasDoacoesPage extends StatelessWidget {
         'status': "CONCLUIDO",
       });
       print('Status da doação atualizado com sucesso!');
-      Navigator.pop(context);
+
+      // Mostrar o pop-up com o código da doação + 1000
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Código para o Receptor'),
+            content: Text('O código é: ${int.parse(doacao.idDoacao!) + 1000}'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Fechar o diálogo
+                  Navigator.pop(context); // Fechar a página atual
+                },
+                child: Text('Fechar'),
+              ),
+            ],
+          );
+        },
+      );
     } catch (e) {
       print('Erro ao atualizar o status da doação: $e');
     }

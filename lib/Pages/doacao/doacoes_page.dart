@@ -4,6 +4,7 @@ import 'package:flutter_maps/Models/doacao_model.dart';
 import 'package:flutter_maps/Pages/cadastro/cadastro_doacao_page.dart';
 import 'package:flutter_maps/Pages/doacao/doacaoInfo_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_maps/Pages/doacao/interesesses_page.dart';
 import 'package:flutter_maps/Pages/doacao/minhasDoacoes_page.dart';
 import 'package:flutter_maps/servicos/autenticacao_servico.dart';
 
@@ -124,6 +125,20 @@ class _DoacoesPageState extends State<DoacoesPage> {
                       MaterialPageRoute(
                           builder: (context) => MinhasDoacoesPage()),
                     );
+                  },
+                ),
+              ),
+              PopupMenuItem(
+                child: ListTile(
+                  leading: Icon(Icons.star),
+                  title: Text('Interesses'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => InteressesPage()),
+                    ); // Fecha o menu
+                    // Adicione aqui a navegação para a página de interesses
                   },
                 ),
               ),

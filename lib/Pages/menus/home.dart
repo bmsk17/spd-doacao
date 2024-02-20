@@ -1,8 +1,6 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:flutter_maps/Models/usuario_model.dart';
-import 'package:flutter_maps/Pages/doacao/doacoes_page.dart';
+import 'package:flutter_maps/Pages/doacao/doacoes_page.dart'; // Adicionando o 'as' para diferenciar
 import 'package:flutter_maps/Pages/login_page.dart';
 import 'package:flutter_maps/Pages/menus/home_page.dart';
 import 'package:flutter_maps/Pages/menus/institutions_page.dart';
@@ -86,7 +84,7 @@ class _HomeState extends State<Home> {
           child: <Widget>[
             HomePage(),
             const InstitutionsPage(),
-            DoacoesPage(),
+            DoacoesPage(), // Referenciando explicitamente a HomePage de DoacoesPage
             const MapPage(),
             const ProfilePage(),
           ][currentPageIndex],

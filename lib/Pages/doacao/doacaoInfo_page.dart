@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_maps/Models/doacao_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class InfoDoacao extends StatelessWidget {
   final DoacaoModel doacao;
   final String idDocumento;
   final FirebaseFirestore db = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   InfoDoacao({required this.doacao, required this.idDocumento});
 
   Future<void> _adquirirDoacao(BuildContext context) async {
-    print("------------------>>>>>   : ${idDocumento}");
     try {
+      User? user = _auth.currentUser;
+      String? emailReceptor = user?.email;
+
       await FirebaseFirestore.instance
           .collection('doacao')
           .doc(idDocumento)
           .update({
         'status': "EM ANDAMENTO",
+        'email_receptor': emailReceptor,
       });
+
       print('Status da doação atualizado com sucesso!');
       Navigator.pop(context);
     } catch (e) {

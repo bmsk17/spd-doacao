@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_maps/Models/instituicao_model.dart';
 
 class InstitutionsPage extends StatefulWidget {
   const InstitutionsPage({super.key});

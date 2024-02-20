@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_maps/Models/doacao_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_maps/Models/instituicao_model.dart';
 import 'package:flutter_maps/servicos/autenticacao_servico.dart';
 
 class CadastroDoacao extends StatefulWidget {

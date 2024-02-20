@@ -9,10 +9,11 @@ import 'package:flutter_maps/Pages/menus/institutions_page.dart';
 import 'package:flutter_maps/Pages/menus/map_page.dart';
 import 'package:flutter_maps/Pages/menus/profile_page.dart';
 import 'package:flutter_maps/servicos/autenticacao_servico.dart';
-// import 'package:http/http.dart' as http;
 
 class Home extends StatefulWidget {
-  const Home(UserModel user, {Key? key}) : super(key: key);
+  final UserModel user;
+
+  const Home(this.user, {Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -39,9 +40,12 @@ class _HomeState extends State<Home> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        leading: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: CircleAvatar(),
+        title: Row(
+          children: [
+            CircleAvatar(),
+            const SizedBox(width: 8),
+            Text(widget.user.nome ?? ''),
+          ],
         ),
         title: Text(
           nome,

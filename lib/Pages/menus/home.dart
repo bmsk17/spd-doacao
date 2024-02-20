@@ -40,12 +40,9 @@ class _HomeState extends State<Home> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: Row(
-          children: [
-            CircleAvatar(),
-            const SizedBox(width: 8),
-            Text(widget.user.nome ?? ''),
-          ],
+        leading: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: CircleAvatar(),
         ),
         title: Text(
           nome,

@@ -1,10 +1,9 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_maps/Models/usuario_model.dart';
 import 'package:flutter_maps/Pages/menus/home.dart';
+import 'package:flutter_maps/Models/usuario_model.dart';
 import 'package:flutter_maps/servicos/autenticacao_servico.dart';
 
 class CadastroPage extends StatefulWidget {
@@ -19,8 +18,6 @@ class _CadastroPageState extends State<CadastroPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   var _isLoading = false;
-
-  final db = FirebaseFirestore.instance;
 
   void _navigateToHome(UserModel user) {
     Navigator.of(context)
@@ -120,7 +117,7 @@ class _CadastroPageState extends State<CadastroPage> {
 
                 final user = await AutenticacaoServico(context)
                     .createUserWithEmailAndPassword(
-                        nome, email, senha, _avatar);
+                        nome, email, senha, _avatar, "");
 
                 setState(() => _isLoading = false);
 

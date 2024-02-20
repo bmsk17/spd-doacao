@@ -55,6 +55,7 @@ class _DoacoesPageState extends State<DoacoesPage> {
               endereco: data['endereco'],
               emailDoador: data['email_doador'],
               emailReceptor: data['email_receptor'],
+              contato: data['contato'],
               imageUrl: data['imagemUrl'],
               status: data['status'],
             );
@@ -94,7 +95,6 @@ class _DoacoesPageState extends State<DoacoesPage> {
         onPressed: () async {
           // Mostra um menu de opções ao pressionar o botão de adicionar
 
-          
           showMenu(
             context: context,
             position: RelativeRect.fromLTRB(

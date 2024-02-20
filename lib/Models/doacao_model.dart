@@ -8,6 +8,7 @@ class DoacaoModel {
   String? emailReceptor;
   String? status;
   String? imageUrl;
+  String? contato; // Novo campo de contato
   DateTime dataCriacao = DateTime.now();
   DateTime dataConclusao = DateTime.now();
 
@@ -20,6 +21,7 @@ class DoacaoModel {
     this.emailReceptor,
     this.status,
     this.imageUrl,
+    this.contato, // Adicionando o novo campo de contato ao construtor
   });
 
   // Método para criar uma instância de DoacaoModel a partir de um mapa JSON
@@ -31,6 +33,7 @@ class DoacaoModel {
     emailReceptor = json['email_receptor'] as String?;
     status = json['status'] as String?;
     imageUrl = json['imagemUrl'] as String?;
+    contato = json['contato'] as String?; // Obtendo o valor do campo de contato
     dataCriacao = (json['data_criacao'] as Timestamp).toDate();
     dataConclusao = (json['data_conclusao'] as Timestamp).toDate();
   }
@@ -45,6 +48,7 @@ class DoacaoModel {
       'email_receptor': emailReceptor,
       'status': status,
       'imagemUrl': imageUrl,
+      'contato': contato, // Adicionando o novo campo de contato ao mapa JSON
       'data_criacao': Timestamp.fromDate(dataCriacao),
       'data_conclusao': Timestamp.fromDate(dataConclusao),
     };

@@ -31,14 +31,13 @@ class InfoDoacao extends StatelessWidget {
       appBar: AppBar(
         title: Text('Detalhes da Doação'),
       ),
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
                 width: 200,
                 height: 200,
                 color: Colors.grey,
@@ -60,28 +59,46 @@ class InfoDoacao extends StatelessWidget {
                         color: Colors.red,
                       ),
               ),
-              SizedBox(height: 24.0),
-              Text(
-                'Descrição: ${doacao.descricao}',
-                style: TextStyle(fontSize: 18.0),
+            ),
+            SizedBox(height: 24.0),
+            Center(
+              child: Text(
+                '${doacao.descricao}',
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 12.0),
-              Text(
-                'Endereço: ${doacao.endereco}',
-                style: TextStyle(fontSize: 18.0),
+            ),
+            SizedBox(height: 24.0),
+            Center(
+              child: Container(
+                padding: EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Contato: ${doacao.contato}',
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                    SizedBox(height: 12.0),
+                    Text(
+                      'Data de Criação: ${doacao.dataCriacao.day}/${doacao.dataCriacao.month}/${doacao.dataCriacao.year}',
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(height: 12.0),
-              Text(
-                'id: ${doacao.idDoacao}',
-                style: TextStyle(fontSize: 18.0),
-              ),
-              SizedBox(height: 24.0),
-              ElevatedButton(
+            ),
+            SizedBox(height: 24.0),
+            Center(
+              child: ElevatedButton(
                 onPressed: () => _adquirirDoacao(context),
                 child: Text('Interessado em Adquirir'),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

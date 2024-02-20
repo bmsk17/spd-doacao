@@ -26,6 +26,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final user = AutenticacaoServico(context).getLoggerUser();
     String? _avatar = user?.avatar ?? 'Email não disponível';
+    String? nome = user?.nome ?? 'Email não disponível';
 
     void _signOut() async {
       await AutenticacaoServico(context).signOut();
@@ -44,14 +45,12 @@ class _HomeState extends State<Home> {
               backgroundImage: NetworkImage(_avatar ?? ''),
             ),
             const SizedBox(width: 8),
-            Text(widget.user.nome ?? ''),
+            Text(
+              nome ?? '',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
           ],
         ),
-        title: Text(
-          user?.nome,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-        ),
-        titleSpacing: 2,
         actions: [
           IconButton(
             onPressed: () {

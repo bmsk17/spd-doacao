@@ -3,62 +3,54 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_maps/Models/instituicao_model.dart';
 
 class InstitutionsPage extends StatefulWidget {
-  const InstitutionsPage({super.key});
+  const InstitutionsPage({Key? key}) : super(key: key);
 
   @override
   State<InstitutionsPage> createState() => _InstitutionsPageState();
 }
 
 class _InstitutionsPageState extends State<InstitutionsPage> {
-  int? value = 0;
+  late List<InstituicaoModel> items;
+  late List<InstituicaoModel> allItems;
 
-  List items = [];
-  List allItems = [
-    {
-      'nome': 'GAIC',
-      'descricao': 'Grupo de Apoio a Instituições de Caridade',
-      'imageUrl': ''
-    },
-    {
-      'nome': 'Abrigo Moacyr Alves',
-      'descricao': 'Grupo de Apoio a Instituições de Caridade',
-      'imageUrl': ''
-    },
-    {
-      'nome': 'GAIC',
-      'descricao': 'Grupo de Apoio a Instituições de Caridade',
-      'imageUrl': ''
-    },
-    {
-      'nome': 'GAIC',
-      'descricao': 'Grupo de Apoio a Instituições de Caridade',
-      'imageUrl': ''
-    },
-    {
-      'nome': 'GAIC',
-      'descricao': 'Grupo de Apoio a Instituições de Caridade',
-      'imageUrl': ''
-    },
-  ];
+  @override
+  void initState() {
+    super.initState();
+    // Inicializando as listas vazias
+    items = [];
+    allItems = [];
+    // Chamando a função para carregar os dados do Firestore
+    _loadInstituicoes();
+  }
+
+  Future<void> _loadInstituicoes() async {
+    // Acessando a coleção 'instituicao' no Firestore
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await FirebaseFirestore.instance.collection('instituicao').get();
+
+    setState(() {
+      // Iterando sobre os documentos obtidos
+      allItems = querySnapshot.docs
+          .map((doc) => InstituicaoModel.fromJson(doc.data()!))
+          .toList();
+      items =
+          List<InstituicaoModel>.from(allItems); // Corrigindo o tipo da lista
+    });
+  }
 
   void filterSearchResults(String query) {
     setState(() {
       if (query.isEmpty) {
-        items = allItems;
+        items =
+            List<InstituicaoModel>.from(allItems); // Corrigindo o tipo da lista
         return;
       }
 
       items = allItems
           .where((item) =>
-              item['nome'].toLowerCase().contains(query.toLowerCase()))
+              item.nome?.toLowerCase().contains(query.toLowerCase()) ?? false)
           .toList();
     });
-  }
-
-  @override
-  void initState() {
-    items = allItems;
-    super.initState();
   }
 
   @override
@@ -73,60 +65,53 @@ class _InstitutionsPageState extends State<InstitutionsPage> {
         children: <Widget>[
           TextField(
             decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                hintText: 'Procure por instituições ou beneficiários',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                )),
+              prefixIcon: Icon(Icons.search),
+              hintText: 'Procure por instituições',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(25.0)),
+              ),
+            ),
             controller: searchController,
             onChanged: (value) {
               filterSearchResults(searchController.text);
             },
           ),
           const SizedBox(height: 12),
-          Wrap(spacing: 5.0, children: [
-            ChoiceChip(
-              label: const Text('Instituições'),
-              selected: value == 0,
-              onSelected: (bool selected) {
-                setState(() {
-                  value = 0;
-                });
-              },
-            ),
-            ChoiceChip(
-              label: const Text('Beneficiários'),
-              selected: value == 1,
-              onSelected: (bool selected) {
-                setState(() {
-                  value = 1;
-                });
-              },
-            )
-          ]),
           Expanded(
-            child: items.isEmpty
-                ? const Center(child: Text('Sem resultados'))
-                : ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: items.length,
-                    itemBuilder: (context, index) => Column(
-                          children: [
-                            ListTile(
-                              tileColor: Theme.of(context).primaryColor,
-                              leading: const Icon(Icons.group),
-                              title: Text(
-                                items[index]['nome'],
-                                style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                              subtitle: Text(items[index]['descricao']),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  if (items.isEmpty)
+                    const Center(child: Text('Sem resultados'))
+                  else
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: items.length,
+                      itemBuilder: (context, index) {
+                        final instituicao = items[index];
+                        return Container(
+                          margin: const EdgeInsets.symmetric(vertical: 4.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: ListTile(
+                            tileColor: Theme.of(context).primaryColor,
+                            leading: const Icon(Icons.group),
+                            title: Text(
+                              instituicao.nome ?? '',
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
                             ),
-                            const SizedBox(
-                              height: 8,
-                            )
-                          ],
-                        )),
+                            subtitle: Text(instituicao.descricao ?? ''),
+                          ),
+                        );
+                      },
+                    ),
+                ],
+              ),
+            ),
           )
         ],
       ),

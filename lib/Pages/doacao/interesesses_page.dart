@@ -35,7 +35,8 @@ class _InteressesPageState extends State<InteressesPage> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Código Esperado: $codigoEsperado'),
+              // Removido a exibição do código esperado
+              // Text('Código Esperado: $codigoEsperado'),
               SizedBox(height: 12),
               TextField(
                 controller: codigoController,

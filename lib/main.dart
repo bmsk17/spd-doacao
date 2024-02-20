@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_maps/Pages/doacao/doacoes_page.dart';
 import 'package:flutter_maps/Pages/menus/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_maps/servicos/autenticacao_servico.dart';

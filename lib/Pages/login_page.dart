@@ -5,10 +5,12 @@ import 'package:flutter_maps/servicos/autenticacao_servico.dart';
 import 'cadastro/cadastro_usuario_page.dart'; // Importando a página de cadastro
 
 void main() {
-  runApp(LoginApp());
+  runApp(const LoginApp());
 }
 
 class LoginApp extends StatelessWidget {
+  const LoginApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,12 +19,14 @@ class LoginApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LoginPage(),
+      home: const LoginPage(),
     );
   }
 }
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -67,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text(
+        title: const Text(
           'Login',
           style: TextStyle(
             fontSize: 24.0,
@@ -76,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -84,30 +88,30 @@ class _LoginPageState extends State<LoginPage> {
               controller: _usernameController,
               decoration: InputDecoration(
                 labelText: 'Email',
-                prefixIcon: Icon(Icons.person),
+                prefixIcon: const Icon(Icons.person),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
             ),
-            SizedBox(height: 12.0),
+            const SizedBox(height: 12.0),
             TextField(
               controller: _passwordController,
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Password',
-                prefixIcon: Icon(Icons.lock),
+                prefixIcon: const Icon(Icons.lock),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Text(
               _errorMessage,
-              style: TextStyle(color: Colors.red),
+              style: const TextStyle(color: Colors.red),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Row(
               children: [
                 Expanded(
@@ -115,8 +119,8 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       _signInEmailAndPassword();
                     },
-                    icon: Icon(Icons.login),
-                    label: Text('Login'),
+                    icon: const Icon(Icons.login),
+                    label: const Text('Login'),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -124,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                SizedBox(width: 12.0),
+                const SizedBox(width: 12.0),
                 Expanded(
                   child: TextButton.icon(
                     onPressed: () {
@@ -134,8 +138,8 @@ class _LoginPageState extends State<LoginPage> {
                         MaterialPageRoute(builder: (context) => CadastroPage()),
                       );
                     },
-                    icon: Icon(Icons.person_add),
-                    label: Text('Cadastrar'),
+                    icon: const Icon(Icons.person_add),
+                    label: const Text('Cadastrar'),
                     style: TextButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),

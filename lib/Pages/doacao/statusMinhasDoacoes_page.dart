@@ -9,14 +9,14 @@ class StatusMinhasDoacoesPage extends StatelessWidget {
 
   StatusMinhasDoacoesPage({required this.doacao, required this.idDocumento});
 
-  Future<void> _adquirirDoacao(BuildContext context) async {
+  Future<void> _concluirDoacao(BuildContext context) async {
     print("------------------>>>>>   : ${idDocumento}");
     try {
       await FirebaseFirestore.instance
           .collection('doacao')
           .doc(idDocumento)
           .update({
-        'status': "EM ANDAMENTO",
+        'status': "CONCLUIDO",
       });
       print('Status da doação atualizado com sucesso!');
       Navigator.pop(context);
@@ -28,12 +28,6 @@ class StatusMinhasDoacoesPage extends StatelessWidget {
   void _ignorarDoacao(BuildContext context) {
     // Implemente a lógica para ignorar a doação
     print('Doação ignorada!');
-    Navigator.pop(context);
-  }
-
-  void _concluirDoacao(BuildContext context) {
-    // Implemente a lógica para concluir a doação
-    print('Doação concluída!');
     Navigator.pop(context);
   }
 

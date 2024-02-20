@@ -25,17 +25,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final user = AutenticacaoServico(context).getLoggerUser();
-<<<<<<< HEAD
     String? _avatar = user?.avatar ?? 'Email não disponível';
 
     void _signOut() async {
-=======
-
-    String? email = user?.email ?? 'Email não disponível';
-    String? nome = user?.nome ?? 'Nome não disponível';
-
-    void signOut() async {
->>>>>>> 720d900a8f936d27e0a89a0232d2323508cf2b9d
       await AutenticacaoServico(context).signOut();
       Navigator.pushAndRemoveUntil(
           context,
@@ -46,7 +38,6 @@ class _HomeState extends State<Home> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-<<<<<<< HEAD
         title: Row(
           children: [
             CircleAvatar(
@@ -55,21 +46,16 @@ class _HomeState extends State<Home> {
             const SizedBox(width: 8),
             Text(widget.user.nome ?? ''),
           ],
-=======
-        leading: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: CircleAvatar(),
->>>>>>> 720d900a8f936d27e0a89a0232d2323508cf2b9d
         ),
         title: Text(
-          nome,
+          user?.nome,
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         titleSpacing: 2,
         actions: [
           IconButton(
             onPressed: () {
-              signOut();
+              _signOut();
             },
             icon: const Icon(Icons.logout),
           ),

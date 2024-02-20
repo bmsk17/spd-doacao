@@ -19,6 +19,18 @@ class _MinhasDoacoesPageState extends State<MinhasDoacoesPage> {
     _user = _auth.currentUser!;
   }
 
+  Future<void> _excluirDoacao(String idDocumento) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('doacao')
+          .doc(idDocumento)
+          .delete();
+      print('Doação excluída com sucesso!');
+    } catch (e) {
+      print('Erro ao excluir a doação: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,56 +65,79 @@ class _MinhasDoacoesPageState extends State<MinhasDoacoesPage> {
             );
             return Card(
               elevation: 3,
-              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                title: Text(
-                  data['descricao'],
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 5),
-                    Text('Doador: ${data['email_doador']}'),
-                    Text('Receptor: ${data['email_receptor']}'),
-                    Text('Status: ${data['status']}'),
-                  ],
-                ),
-                leading: Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(data['imageUrl'] ?? ''),
+              margin: EdgeInsets.symmetric(
+                  horizontal: 10, vertical: 10), // Aumentando o espaço vertical
+              child: Container(
+                padding: EdgeInsets.all(16), // Aumentando o espaço interno
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        data['descricao'],
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 8),
+                      Text('Doador: ${data['email_doador']}'),
+                      Text('Receptor: ${data['email_receptor']}'),
+                      Text('Status: ${data['status']}'),
+                    ],
+                  ),
+                  leading: Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(data['imageUrl'] ?? ''),
+                      ),
+                    ),
+                  ),
+                  trailing: Container(
+                    alignment: Alignment.centerRight,
+                    width: 120,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => StatusMinhasDoacoesPage(
+                                  doacao: doacao,
+                                  idDocumento: doc.id,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Verificar',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () => _excluirDoacao(doc.id),
+                          child: Text(
+                            'Excluir',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.red,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                trailing: emAndamento
-                    ? ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => StatusMinhasDoacoesPage(
-                                doacao: doacao,
-                                idDocumento: doc.id,
-                              ),
-                            ),
-                          );
-                        },
-                        child: Text('Verificar'),
-                      )
-                    : ElevatedButton(
-                        onPressed: null,
-                        child: Text('Verificar'),
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.grey,
-                        ),
-                      ),
               ),
             );
           }).toList();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_maps/Models/doacao_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_maps/Models/doacao_model.dart';
 
 class StatusMinhasDoacoesPage extends StatelessWidget {
   final DoacaoModel doacao;
@@ -25,20 +25,31 @@ class StatusMinhasDoacoesPage extends StatelessWidget {
     }
   }
 
+  void _ignorarDoacao(BuildContext context) {
+    // Implemente a lógica para ignorar a doação
+    print('Doação ignorada!');
+    Navigator.pop(context);
+  }
+
+  void _concluirDoacao(BuildContext context) {
+    // Implemente a lógica para concluir a doação
+    print('Doação concluída!');
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Detalhes da Doação'),
       ),
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
                 width: 200,
                 height: 200,
                 color: Colors.grey,
@@ -60,28 +71,37 @@ class StatusMinhasDoacoesPage extends StatelessWidget {
                         color: Colors.red,
                       ),
               ),
-              SizedBox(height: 24.0),
-              Text(
-                'Descrição: ${doacao.descricao}',
-                style: TextStyle(fontSize: 18.0),
-              ),
-              SizedBox(height: 12.0),
-              Text(
-                'Endereço: ${doacao.endereco}',
-                style: TextStyle(fontSize: 18.0),
-              ),
-              SizedBox(height: 12.0),
-              Text(
-                'id: ${doacao.idDoacao}',
-                style: TextStyle(fontSize: 18.0),
-              ),
-              SizedBox(height: 24.0),
-              ElevatedButton(
-                onPressed: () => _adquirirDoacao(context),
-                child: Text('Interessado em Adquirir'),
-              ),
-            ],
-          ),
+            ),
+            SizedBox(height: 24.0),
+            Text(
+              'Descrição: ${doacao.descricao}',
+              style: TextStyle(fontSize: 18.0),
+            ),
+            SizedBox(height: 12.0),
+            Text(
+              'Endereço: ${doacao.endereco}',
+              style: TextStyle(fontSize: 18.0),
+            ),
+            SizedBox(height: 12.0),
+            Text(
+              'ID: ${doacao.idDoacao}',
+              style: TextStyle(fontSize: 18.0),
+            ),
+            SizedBox(height: 24.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () => _ignorarDoacao(context),
+                  child: Text('Ignorar'),
+                ),
+                ElevatedButton(
+                  onPressed: () => _concluirDoacao(context),
+                  child: Text('Concluído'),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

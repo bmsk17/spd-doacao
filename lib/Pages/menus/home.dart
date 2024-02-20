@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_maps/Models/usuario_model.dart';
 import 'package:flutter_maps/Pages/doacao/doacoes_page.dart';
@@ -21,24 +23,35 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    void _signOut() async {
+    final user = AutenticacaoServico(context).getLoggerUser();
+
+    String? email = user?.email ?? 'Email não disponível';
+    String? nome = user?.nome ?? 'Nome não disponível';
+
+    void signOut() async {
       await AutenticacaoServico(context).signOut();
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
+          MaterialPageRoute(builder: (context) => const LoginPage()),
           (route) => false);
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         leading: const Padding(
           padding: EdgeInsets.all(8.0),
           child: CircleAvatar(),
         ),
+        title: Text(
+          nome,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        ),
+        titleSpacing: 2,
         actions: [
           IconButton(
             onPressed: () {
-              _signOut();
+              signOut();
             },
             icon: const Icon(Icons.logout),
           ),

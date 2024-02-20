@@ -1,40 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_maps/servicos/autenticacao_servico.dart';
+import 'package:flutter_maps/shared/profile_button.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    final user = AutenticacaoServico(context).getLoggerUser();
-
-    String? email = user?.email ?? 'Email não disponível';
-    String? nome = user?.nome ?? 'Nome não disponível';
-
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Nome do usuário:',
+        const Text(
+          'Usuário',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 8),
-        Text(
-          nome,
-          style: TextStyle(fontSize: 16),
-        ),
-        SizedBox(height: 16), // Adicionando um espaçamento entre os widgets
-        Text(
-          'Email do usuário:',
+        const SizedBox(height: 10),
+        ProfileButton(label: 'Informações', onPressed: () {}),
+        const SizedBox(height: 10),
+        ProfileButton(label: 'Suas Doações', onPressed: () {}),
+        const SizedBox(height: 20),
+        const Text(
+          'Configurações e Privacidade',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 8),
-        Text(
-          email,
-          style: TextStyle(fontSize: 16),
-        ),
+        const SizedBox(height: 10),
+        ProfileButton(label: 'Configurações', onPressed: () {}),
+        const SizedBox(height: 10),
+        ProfileButton(label: 'Privacidade', onPressed: () {}),
+        const SizedBox(height: 10),
+        ProfileButton(label: 'Sobre', onPressed: () {})
       ],
     );
   }
